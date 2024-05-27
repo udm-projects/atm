@@ -41,14 +41,14 @@ class ATM:
     def withdraw(self, amount: int) -> list[int]:
         if self.min_amount <= amount <= self.max_amount:
             banknotes_cnt = [0 for _ in range(self.denomination_cnt)]
-            new_available_banknotes = self.available_banknotes.copy()
+            available_banknotes_update = self.available_banknotes.copy()
             for banknote in sorted(self.available_banknotes.keys(), reverse=True):
                 if banknote <= amount and self.available_banknotes[banknote]:
                     amount -= banknote
-                    new_available_banknotes[banknote] -= 1
+                    available_banknotes_update[banknote] -= 1
                     banknotes_cnt[self.banknote_to_index[banknote]] += 1
             if amount == 0:
-                self.available_banknotes.update(new_available_banknotes)
+                self.available_banknotes.update(available_banknotes_update)
                 return banknotes_cnt
         return [-1]
 
